@@ -2,7 +2,7 @@ package com.example.runwayimport.controllers;
 
 import java.util.List;
 
-import com.example.runwayimport.models.JobOverviewDTO;
+import com.example.runwayimport.models.JobDTO;
 import com.example.runwayimport.models.RunwayRequestDTO;
 import com.example.runwayimport.services.JobsService;
 
@@ -24,7 +24,7 @@ public class RunwayController {
     }
     
     @PostMapping
-    public ResponseEntity<List<JobOverviewDTO>> runwayPost(@RequestBody final RunwayRequestDTO requestModel) {
+    public ResponseEntity<List<JobDTO>> runwayPost(@RequestBody final RunwayRequestDTO requestModel) {
         
         return new ResponseEntity<>(this.jobsService.findAllJobs(), HttpStatus.CREATED);
     }

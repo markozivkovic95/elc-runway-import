@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.example.runwayimport.models.JobDTO;
-import com.example.runwayimport.models.JobOverviewDTO;
 import com.example.runwayimport.models.SearchParamsDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -17,10 +16,10 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class JobsService {
     
-    private static final String SEARCH_OVERVIEW_ENDPOINT = "https://elc.brandmaker.com/dse/rest/overviewUI/_table-search";
+    private static final String SEARCH_ENDPOINT = "https://elc.brandmaker.com/dse/rest/v1.0/jobs/_search";
     private static final String GET_JOB_BY_ID = "https://elc.brandmaker.com/dse/rest/v1.0/dse-object/%s/0";
 
-    private static final String JOBS_KEY = "jobs";
+    private static final String VALUES_KEY = "values";
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
@@ -32,28 +31,27 @@ public class JobsService {
         this.objectMapper = objectMapper;
     }
 
-    public List<JobOverviewDTO> findAllJobs() {
+    public List<JobDTO> findAllJobs() {
         
-        final Integer moduleId = 16;
         final String filterId = "-3";
 
         final Map<Object, Object> response = this.restTemplate.postForEntity(
-            SEARCH_OVERVIEW_ENDPOINT,
-            new SearchParamsDTO(moduleId, filterId),
+            SEARCH_ENDPOINT,
+            new SearchParamsDTO(filterId),
             HashMap.class
         ).getBody();
 
         final Object jobs;
 
         if (response != null) {
-            jobs = response.get(JOBS_KEY);
+            jobs = response.get(VALUES_KEY);
         } else {
             jobs = null;
         }
 
         return this.objectMapper.convertValue(
                 jobs,
-                TypeFactory.defaultInstance().constructCollectionType(List.class, JobOverviewDTO.class)
+                TypeFactory.defaultInstance().constructCollectionType(List.class, JobDTO.class)
         );
     }
 

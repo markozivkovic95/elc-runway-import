@@ -4,24 +4,13 @@ import java.util.Objects;
 
 public class SearchParamsDTO {
     
-    private Integer moduleId;
     private String filterId;
 
     public SearchParamsDTO() {
     }
 
-    public SearchParamsDTO(final Integer moduleId, final String filterId) {
-        this.moduleId = moduleId;
+    public SearchParamsDTO(final String filterId) {
         this.filterId = filterId;
-    }
-
-    public Integer getModuleId() {
-        return this.moduleId;
-    }
-
-    public SearchParamsDTO setModuleId(final Integer moduleId) {
-        this.moduleId = moduleId;
-        return this;
     }
 
     public String getFilterId() {
@@ -41,20 +30,18 @@ public class SearchParamsDTO {
             return false;
         }
         SearchParamsDTO searchParamsDTO = (SearchParamsDTO) o;
-        return Objects.equals(moduleId, searchParamsDTO.moduleId) &&
-                Objects.equals(filterId, searchParamsDTO.filterId);
+        return Objects.equals(filterId, searchParamsDTO.filterId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(moduleId, filterId);
+        return Objects.hash(filterId);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " moduleId='" + getModuleId() + "'" +
-            ", filterId='" + getFilterId() + "'" +
+            " filterId='" + getFilterId() + "'" +
             "}";
     }
 
