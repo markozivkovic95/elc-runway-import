@@ -7,7 +7,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.example.runwayimport.models.constants.FieldNameConstants;
 
-public class RunwayRequestModel {
+public class RunwayRequestDTO {
     
     @JsonProperty(FieldNameConstants.PROGRAM_ID)
     private String programId;
@@ -70,22 +70,22 @@ public class RunwayRequestModel {
     private String sourceFactoryShipDate;
 
     @JsonProperty(FieldNameConstants.ON_COUNTER_DATES)
-    private List<ProgramOnCounterDate> programOnCounterDates = new ArrayList<>();
+    private List<ProgramOnCounterDateDTO> programOnCounterDates = new ArrayList<>();
 
     @JsonProperty(FieldNameConstants.PRODUCTS)
-    private List<ProductModel> products = new ArrayList<>();
+    private List<ProductDTO> products = new ArrayList<>();
 
-    public RunwayRequestModel() {
+    public RunwayRequestDTO() {
 
     }
 
-    public RunwayRequestModel(final String programId, final String programName, final String programBrand,
+    public RunwayRequestDTO(final String programId, final String programName, final String programBrand,
             final String productLine, final String programStatus, final String programStartDate, 
             final String programEndDate, final String programType, final String priority, final String productRole,
             final String majorInventoryType, final String inventoryType, final String majorCategory,
             final String application, final String category, final String subCategory, final String subCategoryPriority,
             final String season, final String quarter, final String sourceFactoryShipDate, 
-            final List<ProgramOnCounterDate> programOnCounterDates, final List<ProductModel> products) {
+            final List<ProgramOnCounterDateDTO> programOnCounterDates, final List<ProductDTO> products) {
 
         this.programId = programId;
         this.programName = programName;
@@ -115,7 +115,7 @@ public class RunwayRequestModel {
         return this.programId;
     }
 
-    public RunwayRequestModel setProgramId(final String programId) {
+    public RunwayRequestDTO setProgramId(final String programId) {
         this.programId = programId;
         return this;
     }
@@ -124,7 +124,7 @@ public class RunwayRequestModel {
         return this.programName;
     }
 
-    public RunwayRequestModel setProgramName(final String programName) {
+    public RunwayRequestDTO setProgramName(final String programName) {
         this.programName = programName;
         return this;
     }
@@ -133,7 +133,7 @@ public class RunwayRequestModel {
         return this.programBrand;
     }
 
-    public RunwayRequestModel setProgramBrand(final String programBrand) {
+    public RunwayRequestDTO setProgramBrand(final String programBrand) {
         this.programBrand = programBrand;
         return this;
     }
@@ -142,7 +142,7 @@ public class RunwayRequestModel {
         return this.productLine;
     }
 
-    public RunwayRequestModel setProductLine(final String productLine) {
+    public RunwayRequestDTO setProductLine(final String productLine) {
         this.productLine = productLine;
         return this;
     }
@@ -151,7 +151,7 @@ public class RunwayRequestModel {
         return this.programStatus;
     }
 
-    public RunwayRequestModel setProgramStatus(final String programStatus) {
+    public RunwayRequestDTO setProgramStatus(final String programStatus) {
         this.programStatus = programStatus;
         return this;
     }
@@ -160,7 +160,7 @@ public class RunwayRequestModel {
         return this.programStartDate;
     }
 
-    public RunwayRequestModel setProgramStartDate(final String programStartDate) {
+    public RunwayRequestDTO setProgramStartDate(final String programStartDate) {
         this.programStartDate = programStartDate;
         return this;
     }
@@ -169,7 +169,7 @@ public class RunwayRequestModel {
         return this.programEndDate;
     }
 
-    public RunwayRequestModel setProgramEndDate(final String programEndDate) {
+    public RunwayRequestDTO setProgramEndDate(final String programEndDate) {
         this.programEndDate = programEndDate;
         return this;
     }
@@ -178,7 +178,7 @@ public class RunwayRequestModel {
         return this.programType;
     }
 
-    public RunwayRequestModel setProgramType(final String programType) {
+    public RunwayRequestDTO setProgramType(final String programType) {
         this.programType = programType;
         return this;
     }
@@ -187,7 +187,7 @@ public class RunwayRequestModel {
         return this.priority;
     }
 
-    public RunwayRequestModel setPriority(final String priority) {
+    public RunwayRequestDTO setPriority(final String priority) {
         this.priority = priority;
         return this;
     }
@@ -196,7 +196,7 @@ public class RunwayRequestModel {
         return this.productRole;
     }
 
-    public RunwayRequestModel setProductRole(final String productRole) {
+    public RunwayRequestDTO setProductRole(final String productRole) {
         this.productRole = productRole;
         return this;
     }
@@ -205,7 +205,7 @@ public class RunwayRequestModel {
         return this.majorInventoryType;
     }
 
-    public RunwayRequestModel setMajorInventoryType(final String majorInventoryType) {
+    public RunwayRequestDTO setMajorInventoryType(final String majorInventoryType) {
         this.majorInventoryType = majorInventoryType;
         return this;
     }
@@ -214,7 +214,7 @@ public class RunwayRequestModel {
         return this.inventoryType;
     }
 
-    public RunwayRequestModel setInventoryType(final String inventoryType) {
+    public RunwayRequestDTO setInventoryType(final String inventoryType) {
         this.inventoryType = inventoryType;
         return this;
     }
@@ -223,7 +223,7 @@ public class RunwayRequestModel {
         return this.majorCategory;
     }
 
-    public RunwayRequestModel setMajorCategory(final String majorCategory) {
+    public RunwayRequestDTO setMajorCategory(final String majorCategory) {
         this.majorCategory = majorCategory;
         return this;
     }
@@ -232,7 +232,7 @@ public class RunwayRequestModel {
         return this.application;
     }
 
-    public RunwayRequestModel setApplication(final String application) {
+    public RunwayRequestDTO setApplication(final String application) {
         this.application = application;
         return this;
     }
@@ -241,7 +241,7 @@ public class RunwayRequestModel {
         return this.category;
     }
 
-    public RunwayRequestModel setCategory(final String category) {
+    public RunwayRequestDTO setCategory(final String category) {
         this.category = category;
         return this;
     }
@@ -250,7 +250,7 @@ public class RunwayRequestModel {
         return this.subCategory;
     }
 
-    public RunwayRequestModel setSubCategory(final String subCategory) {
+    public RunwayRequestDTO setSubCategory(final String subCategory) {
         this.subCategory = subCategory;
         return this;
     }
@@ -259,7 +259,7 @@ public class RunwayRequestModel {
         return this.subCategoryPriority;
     }
 
-    public RunwayRequestModel setSubCategoryPriority(final String subCategoryPriority) {
+    public RunwayRequestDTO setSubCategoryPriority(final String subCategoryPriority) {
         this.subCategoryPriority = subCategoryPriority;
         return this;
     }
@@ -268,7 +268,7 @@ public class RunwayRequestModel {
         return this.season;
     }
 
-    public RunwayRequestModel setSeason(final String season) {
+    public RunwayRequestDTO setSeason(final String season) {
         this.season = season;
         return this;
     }
@@ -277,7 +277,7 @@ public class RunwayRequestModel {
         return this.quarter;
     }
 
-    public RunwayRequestModel setQuarter(final String quarter) {
+    public RunwayRequestDTO setQuarter(final String quarter) {
         this.quarter = quarter;
         return this;
     }
@@ -286,25 +286,25 @@ public class RunwayRequestModel {
         return this.sourceFactoryShipDate;
     }
 
-    public RunwayRequestModel setSourceFactoryShipDate(final String sourceFactoryShipDate) {
+    public RunwayRequestDTO setSourceFactoryShipDate(final String sourceFactoryShipDate) {
         this.sourceFactoryShipDate = sourceFactoryShipDate;
         return this;
     }
 
-    public List<ProgramOnCounterDate> getProgramOnCounterDates() {
+    public List<ProgramOnCounterDateDTO> getProgramOnCounterDates() {
         return this.programOnCounterDates;
     }
 
-    public RunwayRequestModel setProgramOnCounterDates(final List<ProgramOnCounterDate> programOnCounterDates) {
+    public RunwayRequestDTO setProgramOnCounterDates(final List<ProgramOnCounterDateDTO> programOnCounterDates) {
         this.programOnCounterDates = programOnCounterDates;
         return this;
     }
 
-    public List<ProductModel> getProducts() {
+    public List<ProductDTO> getProducts() {
         return this.products;
     }
 
-    public RunwayRequestModel setProducts(final List<ProductModel> products) {
+    public RunwayRequestDTO setProducts(final List<ProductDTO> products) {
         this.products = products;
         return this;
     }    
@@ -313,32 +313,32 @@ public class RunwayRequestModel {
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof RunwayRequestModel)) {
+        if (!(o instanceof RunwayRequestDTO)) {
             return false;
         }
-        RunwayRequestModel runwayRequestModel = (RunwayRequestModel) o;
-        return Objects.equals(programId, runwayRequestModel.programId) &&
-                Objects.equals(programName, runwayRequestModel.programName) &&
-                Objects.equals(programBrand, runwayRequestModel.programBrand) &&
-                Objects.equals(productLine, runwayRequestModel.productLine) &&
-                Objects.equals(programStatus, runwayRequestModel.programStatus) &&
-                Objects.equals(programStartDate, runwayRequestModel.programStartDate) &&
-                Objects.equals(programEndDate, runwayRequestModel.programEndDate) &&
-                Objects.equals(programType, runwayRequestModel.programType) &&
-                Objects.equals(priority, runwayRequestModel.priority) &&
-                Objects.equals(productRole, runwayRequestModel.productRole) &&
-                Objects.equals(majorInventoryType, runwayRequestModel.majorInventoryType) &&
-                Objects.equals(inventoryType, runwayRequestModel.inventoryType) &&
-                Objects.equals(majorCategory, runwayRequestModel.majorCategory) &&
-                Objects.equals(application, runwayRequestModel.application) &&
-                Objects.equals(category, runwayRequestModel.category) &&
-                Objects.equals(subCategory, runwayRequestModel.subCategory) &&
-                Objects.equals(subCategoryPriority, runwayRequestModel.subCategoryPriority) &&
-                Objects.equals(season, runwayRequestModel.season) &&
-                Objects.equals(quarter, runwayRequestModel.quarter) &&
-                Objects.equals(sourceFactoryShipDate, runwayRequestModel.sourceFactoryShipDate) &&
-                Objects.equals(programOnCounterDates, runwayRequestModel.programOnCounterDates) &&
-                Objects.equals(products, runwayRequestModel.products);                
+        RunwayRequestDTO runwayRequestDTO = (RunwayRequestDTO) o;
+        return Objects.equals(programId, runwayRequestDTO.programId) &&
+                Objects.equals(programName, runwayRequestDTO.programName) &&
+                Objects.equals(programBrand, runwayRequestDTO.programBrand) &&
+                Objects.equals(productLine, runwayRequestDTO.productLine) &&
+                Objects.equals(programStatus, runwayRequestDTO.programStatus) &&
+                Objects.equals(programStartDate, runwayRequestDTO.programStartDate) &&
+                Objects.equals(programEndDate, runwayRequestDTO.programEndDate) &&
+                Objects.equals(programType, runwayRequestDTO.programType) &&
+                Objects.equals(priority, runwayRequestDTO.priority) &&
+                Objects.equals(productRole, runwayRequestDTO.productRole) &&
+                Objects.equals(majorInventoryType, runwayRequestDTO.majorInventoryType) &&
+                Objects.equals(inventoryType, runwayRequestDTO.inventoryType) &&
+                Objects.equals(majorCategory, runwayRequestDTO.majorCategory) &&
+                Objects.equals(application, runwayRequestDTO.application) &&
+                Objects.equals(category, runwayRequestDTO.category) &&
+                Objects.equals(subCategory, runwayRequestDTO.subCategory) &&
+                Objects.equals(subCategoryPriority, runwayRequestDTO.subCategoryPriority) &&
+                Objects.equals(season, runwayRequestDTO.season) &&
+                Objects.equals(quarter, runwayRequestDTO.quarter) &&
+                Objects.equals(sourceFactoryShipDate, runwayRequestDTO.sourceFactoryShipDate) &&
+                Objects.equals(programOnCounterDates, runwayRequestDTO.programOnCounterDates) &&
+                Objects.equals(products, runwayRequestDTO.products);                
     }
 
     @Override

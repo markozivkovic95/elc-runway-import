@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.example.runwayimport.models.constants.FieldNameConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ProgramOnCounterDate {
+public class ProgramOnCounterDateDTO {
 
     @JsonProperty(FieldNameConstants.REGION)
     private String region;
@@ -19,10 +19,10 @@ public class ProgramOnCounterDate {
     @JsonProperty(FieldNameConstants.AFFILIATE_ON_COUNTER_DATE)
     private String affiliateOnCounterDate;
 
-    public ProgramOnCounterDate() {
+    public ProgramOnCounterDateDTO() {
     }
 
-    public ProgramOnCounterDate(final String region, final String regionalOnCounterDate, 
+    public ProgramOnCounterDateDTO(final String region, final String regionalOnCounterDate, 
             final String affiliate, final String affiliateOnCounterDate) {
         this.region = region;
         this.regionalOnCounterDate = regionalOnCounterDate;
@@ -34,7 +34,7 @@ public class ProgramOnCounterDate {
         return this.region;
     }
 
-    public ProgramOnCounterDate setRegion(final String region) {
+    public ProgramOnCounterDateDTO setRegion(final String region) {
         this.region = region;
         return this;
     }
@@ -43,7 +43,7 @@ public class ProgramOnCounterDate {
         return this.regionalOnCounterDate;
     }
 
-    public ProgramOnCounterDate setRegionalOnCounterDate(final String regionalOnCounterDate) {
+    public ProgramOnCounterDateDTO setRegionalOnCounterDate(final String regionalOnCounterDate) {
         this.regionalOnCounterDate = regionalOnCounterDate;
         return this;
     }
@@ -52,7 +52,7 @@ public class ProgramOnCounterDate {
         return this.affiliate;
     }
 
-    public ProgramOnCounterDate setAffiliate(final String affiliate) {
+    public ProgramOnCounterDateDTO setAffiliate(final String affiliate) {
         this.affiliate = affiliate;
         return this;
     }
@@ -61,7 +61,7 @@ public class ProgramOnCounterDate {
         return this.affiliateOnCounterDate;
     }
 
-    public ProgramOnCounterDate setAffiliateOnCounterDate(final String affiliateOnCounterDate) {
+    public ProgramOnCounterDateDTO setAffiliateOnCounterDate(final String affiliateOnCounterDate) {
         this.affiliateOnCounterDate = affiliateOnCounterDate;
         return this;
     }
@@ -70,14 +70,14 @@ public class ProgramOnCounterDate {
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof ProgramOnCounterDate)) {
+        if (!(o instanceof ProgramOnCounterDateDTO)) {
             return false;
         }
-        ProgramOnCounterDate programOnCounterDate = (ProgramOnCounterDate) o;
-        return Objects.equals(region, programOnCounterDate.region) &&
-                Objects.equals(regionalOnCounterDate, programOnCounterDate.regionalOnCounterDate) &&
-                Objects.equals(affiliate, programOnCounterDate.affiliate) &&
-                Objects.equals(affiliateOnCounterDate, programOnCounterDate.affiliateOnCounterDate);
+        ProgramOnCounterDateDTO programOnCounterDateDTO = (ProgramOnCounterDateDTO) o;
+        return Objects.equals(region, programOnCounterDateDTO.region) &&
+                Objects.equals(regionalOnCounterDate, programOnCounterDateDTO.regionalOnCounterDate) &&
+                Objects.equals(affiliate, programOnCounterDateDTO.affiliate) &&
+                Objects.equals(affiliateOnCounterDate, programOnCounterDateDTO.affiliateOnCounterDate);
     }
 
     @Override

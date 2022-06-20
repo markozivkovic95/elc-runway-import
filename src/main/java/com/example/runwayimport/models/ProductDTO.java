@@ -5,7 +5,7 @@ import java.util.Objects;
 import com.example.runwayimport.models.constants.FieldNameConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ProductModel {
+public class ProductDTO {
 
     @JsonProperty(FieldNameConstants.PRODUCT_NAME)
     private String productName;
@@ -37,11 +37,11 @@ public class ProductModel {
     @JsonProperty(FieldNameConstants.SALEABLE)
     private String saleable;
 
-    public ProductModel() {
+    public ProductDTO() {
 
     }
 
-    public ProductModel(final String productName, final String productCode, final String productLine,
+    public ProductDTO(final String productName, final String productCode, final String productLine,
             final String productRole, final String majorCategory, final String application,
             final String category, final String subCategory, final String demandType, 
             final String saleable) {
@@ -61,7 +61,7 @@ public class ProductModel {
         return this.productName;
     }
 
-    public ProductModel setProductName(final String productName) {
+    public ProductDTO setProductName(final String productName) {
         this.productName = productName;
         return this;
     }
@@ -70,7 +70,7 @@ public class ProductModel {
         return this.productCode;
     }
 
-    public ProductModel setProductCode(final String productCode) {
+    public ProductDTO setProductCode(final String productCode) {
         this.productCode = productCode;
         return this;
     }
@@ -79,7 +79,7 @@ public class ProductModel {
         return this.productLine;
     }
 
-    public ProductModel setProductLine(final String productLine) {
+    public ProductDTO setProductLine(final String productLine) {
         this.productLine = productLine;
         return this;
     }
@@ -88,7 +88,7 @@ public class ProductModel {
         return this.productRole;
     }
 
-    public ProductModel setProductRole(final String productRole) {
+    public ProductDTO setProductRole(final String productRole) {
         this.productRole = productRole;
         return this;
     }
@@ -97,7 +97,7 @@ public class ProductModel {
         return this.majorCategory;
     }
 
-    public ProductModel setMajorCategory(final String majorCategory) {
+    public ProductDTO setMajorCategory(final String majorCategory) {
         this.majorCategory = majorCategory;
         return this;
     }
@@ -106,7 +106,7 @@ public class ProductModel {
         return this.application;
     }
 
-    public ProductModel setApplication(final String application) {
+    public ProductDTO setApplication(final String application) {
         this.application = application;
         return this;
     }
@@ -115,7 +115,7 @@ public class ProductModel {
         return this.category;
     }
 
-    public ProductModel setCategory(final String category) {
+    public ProductDTO setCategory(final String category) {
         this.category = category;
         return this;
     }
@@ -124,7 +124,7 @@ public class ProductModel {
         return this.subCategory;
     }
 
-    public ProductModel setSubCategory(final String subCategory) {
+    public ProductDTO setSubCategory(final String subCategory) {
         this.subCategory = subCategory;
         return this;
     }
@@ -133,7 +133,7 @@ public class ProductModel {
         return this.demandType;
     }
 
-    public ProductModel setDemandType(final String demandType) {
+    public ProductDTO setDemandType(final String demandType) {
         this.demandType = demandType;
         return this;
     }
@@ -142,7 +142,7 @@ public class ProductModel {
         return this.saleable;
     }
 
-    public ProductModel setSaleable(final String saleable) {
+    public ProductDTO setSaleable(final String saleable) {
         this.saleable = saleable;
         return this;
     }
@@ -151,20 +151,20 @@ public class ProductModel {
     public boolean equals(Object o) {
         if (o == this)
             return true;
-        if (!(o instanceof ProductModel)) {
+        if (!(o instanceof ProductDTO)) {
             return false;
         }
-        ProductModel product = (ProductModel) o;
-        return Objects.equals(productName, product.productName) &&
-                Objects.equals(productCode, product.productCode) &&
-                Objects.equals(productLine, product.productLine) &&
-                Objects.equals(productRole, product.productRole) &&
-                Objects.equals(majorCategory, product.majorCategory) &&
-                Objects.equals(application, product.application) &&
-                Objects.equals(category, product.category) &&
-                Objects.equals(subCategory, product.subCategory) &&
-                Objects.equals(demandType, product.demandType) &&
-                Objects.equals(saleable, product.saleable);
+        ProductDTO productDTO = (ProductDTO) o;
+        return Objects.equals(productName, productDTO.productName) &&
+                Objects.equals(productCode, productDTO.productCode) &&
+                Objects.equals(productLine, productDTO.productLine) &&
+                Objects.equals(productRole, productDTO.productRole) &&
+                Objects.equals(majorCategory, productDTO.majorCategory) &&
+                Objects.equals(application, productDTO.application) &&
+                Objects.equals(category, productDTO.category) &&
+                Objects.equals(subCategory, productDTO.subCategory) &&
+                Objects.equals(demandType, productDTO.demandType) &&
+                Objects.equals(saleable, productDTO.saleable);
     }
 
     @Override
