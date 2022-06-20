@@ -1,0 +1,7 @@
+
+authentication:
+    user: filip.djordjevic
+    password: EsteeLauder1
+
+server:
+    url: https://elc.brandmaker.com
