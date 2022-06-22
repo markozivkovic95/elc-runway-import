@@ -2,6 +2,7 @@ package com.example.runwayimport.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.example.runwayimport.constants.FieldNameConstants;
 import com.example.runwayimport.constants.TechnicalNameConstants;
@@ -40,8 +41,33 @@ public class JobUtils {
 
     public static JobUpdateDTO createJobUpdateRequest(final JobDTO jobDTO, final RunwayRequestDTO request) {
 
+        final List<CustomValueDTO> values = addParameters(request).stream()
+                .filter(value -> value.getValue() != null)
+                .collect(Collectors.toList());
+
+        return new JobUpdateDTO(jobDTO.getInstanceId(), jobDTO.getL10nLocaleId(), 0, values);
+    }
+
+    public static SearchParamsDTO searchRunwayJobsByNameRequest(final String value) {
+        
+        final String formattedValue = value.replace("\"", "");
+
+        return new SearchParamsDTO(List.of(
+                new SearchVariableConditionDTO(formattedValue, TechnicalNameConstants.JOB_NAME,
+                    "AND", "EQUAL"), 
+                new SearchVariableConditionDTO(
+                        RUNWAY_JOB_ID.toString(), TechnicalNameConstants.JOB_TYPE_PSEUDO_VARIABLE,
+                        "AND", "EQUAL"
+                ))
+        );
+    }
+
+    private static List<CustomValueDTO> addParameters(final RunwayRequestDTO request) {
+
         final List<CustomValueDTO> values = new ArrayList<>();
 
+        values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_ID, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProgramId()));
+        values.add(new CustomValueDTO(TechnicalNameConstants.GLOBAL_PROGRAM_ID, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProgramId()));
         values.add(new CustomValueDTO(TechnicalNameConstants.JOB_NAME, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProgramName()));
         values.add(new CustomValueDTO(TechnicalNameConstants.BRAND, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProgramBrand()));
         values.add(new CustomValueDTO(TechnicalNameConstants.PRODUCT_LINE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProductLine()));
@@ -63,19 +89,7 @@ public class JobUtils {
         values.add(new CustomValueDTO(TechnicalNameConstants.SOURCE_FACTORY_SHIP_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getSourceFactoryShipDate()));
         values.add(new CustomValueDTO(TechnicalNameConstants.PRODUCTS_GRID, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProducts()));
 
-        return new JobUpdateDTO(jobDTO.getInstanceId(), jobDTO.getL10nLocaleId(), 0, values);
-    }
-
-    public static SearchParamsDTO searchRunwayJobsByNameRequest(final String value) {
-        
-        return new SearchParamsDTO(List.of(
-                new SearchVariableConditionDTO(value, TechnicalNameConstants.JOB_NAME,
-                    "AND", "EQUAL"), 
-                new SearchVariableConditionDTO(
-                        RUNWAY_JOB_ID.toString(), TechnicalNameConstants.JOB_TYPE_PSEUDO_VARIABLE,
-                        "AND", "EQUAL"
-                ))
-        );
+        return values;
     }
 
 }

@@ -1,11 +1,8 @@
 package com.example.runwayimport.controllers;
 
-import java.util.List;
-
 import com.example.runwayimport.businessservices.JobBusinessService;
 import com.example.runwayimport.models.JobDTO;
 import com.example.runwayimport.models.RunwayRequestDTO;
-import com.example.runwayimport.services.JobService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/runway")
 public class RunwayController {
 
-    private final JobService jobService;
     private final JobBusinessService jobBusinessService;
 
-    public RunwayController(final JobService jobService,
-            final JobBusinessService jobBusinessService) {
-        this.jobService = jobService;
+    public RunwayController(final JobBusinessService jobBusinessService) {
         this.jobBusinessService = jobBusinessService;
     }
     

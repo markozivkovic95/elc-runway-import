@@ -3,6 +3,7 @@ package com.example.runwayimport.businessservices;
 import java.util.List;
 
 import com.example.runwayimport.constants.TechnicalNameConstants;
+import com.example.runwayimport.enums.GeographicLevelEnum;
 import com.example.runwayimport.enums.InheritFromParentEnum;
 import com.example.runwayimport.enums.JobStatusEnum;
 import com.example.runwayimport.models.CustomValueDTO;
@@ -33,14 +34,12 @@ public class JobBusinessService {
 
     public JobDTO importRunwayJob(final RunwayRequestDTO request) {
 
-        // TODO: Program ID
         final SearchParamsDTO searchParams = JobUtils.searchRunwayJobsByNameRequest(request.getProgramName());
 
         final List<JobDTO> jobDTOs = this.jobService.findAllJobs(searchParams);
         final JobDTO jobDTO;
 
         if (CollectionUtils.isEmpty(jobDTOs)) {
-            // Create
             LOGGER.info("Creating new job: {}.", request.getProgramName());
 
             jobDTO = this.jobService.createJob(new JobCreateDTO(
@@ -53,17 +52,39 @@ public class JobBusinessService {
             jobDTO = jobDTOs.get(0);
         }
 
-        // Update
         LOGGER.info("Updating job with ID {}.", jobDTO.getInstanceId());
         
         final JobUpdateDTO jobUpdateDTO = JobUtils.createJobUpdateRequest(jobDTO, request);
+        updateRunwayJobParameters(jobUpdateDTO);
+
+        return this.jobService.updateJob(jobUpdateDTO);
+    }
+
+    private void updateRunwayJobParameters(final JobUpdateDTO jobUpdateDTO) {
+    
         jobUpdateDTO.getValues().add(
-                new CustomValueDTO(TechnicalNameConstants.PROCESSING_STATUS, InheritFromParentEnum.NOT_SUPPORTED.getKey(), JobStatusEnum.READY_FOR_PROCESSING.getKey())
+            new CustomValueDTO(
+                TechnicalNameConstants.PROCESSING_STATUS,
+                InheritFromParentEnum.NOT_SUPPORTED.getKey(),
+                String.format("\"%s\"", JobStatusEnum.READY_FOR_PROCESSING.getKey())
+            )
         );
-
-        final JobDTO jobUpdateDTO2 = this.jobService.updateJob(jobUpdateDTO);
-
-        return jobUpdateDTO2;
+        jobUpdateDTO.getValues().add(
+            new CustomValueDTO(
+                TechnicalNameConstants.GEOGRAPHIC_LEVEL,
+                InheritFromParentEnum.NOT_SUPPORTED.getKey(),
+                String.format("\"%s\"", GeographicLevelEnum.GLOBAL.getKey()))
+        );
+        // TODO: Find enum
+        jobUpdateDTO.getValues().add(
+            new CustomValueDTO(
+                TechnicalNameConstants.SUBSCRIBED,
+                InheritFromParentEnum.NOT_SUPPORTED.getKey(),
+                "\"2\""
+            )
+        );
+        
+        // TODO: Add Visible: Show
     }
 
 }

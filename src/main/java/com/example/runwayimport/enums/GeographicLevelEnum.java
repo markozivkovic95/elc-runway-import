@@ -1,12 +1,12 @@
 package com.example.runwayimport.enums;
 
-public enum JobStatusEnum {
-    READY_FOR_PROCESSING("Ready for Processing"),
-    PROCESSED("Processed");
+public enum GeographicLevelEnum {
+    
+    GLOBAL("Global");
 
     private final String key;
 
-    JobStatusEnum(final String key) {
+    GeographicLevelEnum(final String key) {
         this.key = key;
     }
 
