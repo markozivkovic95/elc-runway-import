@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.example.runwayimport.constants.FieldNameConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.example.runwayimport.models.constants.FieldNameConstants;
 
 public class RunwayRequestDTO {
     

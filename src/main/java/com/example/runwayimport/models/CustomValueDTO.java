@@ -4,21 +4,27 @@ import java.util.Objects;
 
 public class CustomValueDTO {
     
+    private String technicalName;
     private String inheritFromParent;
-    private String inheritedValue;
-    private String displayValue;
     private String value;
 
     public CustomValueDTO() {
 
     }
 
-    public CustomValueDTO(final String inheritFromParent, final String inheritedValue,
-            final String displayValue, final String value) {
+    public CustomValueDTO(final String technicalName, final String inheritFromParent, final String value) {
+        this.technicalName = technicalName;
         this.inheritFromParent = inheritFromParent;
-        this.inheritedValue = inheritedValue;
-        this.displayValue = displayValue;
         this.value = value;
+    }
+
+    public String getTechnicalName() {
+        return this.technicalName;
+    }
+
+    public CustomValueDTO setTechnicalName(final String technicalName) {
+        this.technicalName = technicalName;
+        return this;
     }
 
     public String getInheritFromParent() {
@@ -27,24 +33,6 @@ public class CustomValueDTO {
 
     public CustomValueDTO setInheritFromParent(final String inheritFromParent) {
         this.inheritFromParent = inheritFromParent;
-        return this;
-    }
-
-    public String getInheritedValue() {
-        return this.inheritedValue;
-    }
-
-    public CustomValueDTO setInheritedValue(final String inheritedValue) {
-        this.inheritedValue = inheritedValue;
-        return this;
-    }
-
-    public String getDisplayValue() {
-        return this.displayValue;
-    }
-
-    public CustomValueDTO setDisplayValue(final String displayValue) {
-        this.displayValue = displayValue;
         return this;
     }
 
@@ -65,25 +53,23 @@ public class CustomValueDTO {
             return false;
         }
         CustomValueDTO customValueDTO = (CustomValueDTO) o;
-        return Objects.equals(inheritFromParent, customValueDTO.inheritFromParent) &&
-                Objects.equals(inheritedValue, customValueDTO.inheritedValue) &&
-                Objects.equals(displayValue, customValueDTO.displayValue) &&
+        return Objects.equals(technicalName, customValueDTO.technicalName) &&
+                Objects.equals(inheritFromParent, customValueDTO.inheritFromParent) &&
                 Objects.equals(value, customValueDTO.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(inheritFromParent, inheritedValue, displayValue, value);
+        return Objects.hash(technicalName, inheritFromParent, value);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " inheritFromParent='" + getInheritFromParent() + "'" +
-            ", inheritedValue='" + getInheritedValue() + "'" +
-            ", displayValue='" + getDisplayValue() + "'" +
+            " technicalName='" + getTechnicalName() + "'" +
+            ", inheritFromParent='" + getInheritFromParent() + "'" +
             ", value='" + getValue() + "'" +
             "}";
-    }
+    }    
 
 }

@@ -2,7 +2,7 @@ package com.example.runwayimport.models;
 
 import java.util.Objects;
 
-import com.example.runwayimport.models.constants.FieldNameConstants;
+import com.example.runwayimport.constants.FieldNameConstants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductDTO {

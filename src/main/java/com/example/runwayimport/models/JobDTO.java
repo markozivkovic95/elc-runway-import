@@ -1,5 +1,7 @@
 package com.example.runwayimport.models;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class JobDTO {
@@ -16,6 +18,7 @@ public class JobDTO {
     private JobAssignmentDTO assignment;
     private Integer workflowTypeId;
     private Integer currentStepTemplateId;
+    private Map<String, CustomValueDTO> values = new HashMap<>();
 
     public JobDTO() {
 
@@ -24,7 +27,7 @@ public class JobDTO {
     public JobDTO(final Integer instanceId, final Integer l10nLocaleId, final Integer workflowObjectId,
             final String name, final String extendedName, final String state, final Integer ordinalNumber,
             final Integer typeId, final AccountDTO creator, final JobAssignmentDTO assignment, 
-            final Integer workflowTypeId, final Integer currentStepTemplateId) {
+            final Integer workflowTypeId, final Integer currentStepTemplateId, final Map<String,CustomValueDTO> values) {
         
         this.instanceId = instanceId;
         this.l10nLocaleId = l10nLocaleId;
@@ -38,6 +41,7 @@ public class JobDTO {
         this.assignment = assignment;
         this.workflowTypeId = workflowTypeId;
         this.currentStepTemplateId = currentStepTemplateId;
+        this.values = values;
     }
 
     public Integer getInstanceId() {
@@ -148,6 +152,15 @@ public class JobDTO {
         return this;
     }
 
+    public Map<String,CustomValueDTO> getValues() {
+        return this.values;
+    }
+
+    public JobDTO setValues(final Map<String,CustomValueDTO> values) {
+        this.values = values;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -167,14 +180,16 @@ public class JobDTO {
                 Objects.equals(creator, jobDTO.creator) &&
                 Objects.equals(assignment, jobDTO.assignment) &&
                 Objects.equals(workflowTypeId, jobDTO.workflowTypeId) &&
-                Objects.equals(currentStepTemplateId, jobDTO.currentStepTemplateId);
+                Objects.equals(currentStepTemplateId, jobDTO.currentStepTemplateId) &&
+                Objects.equals(values, jobDTO.values);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
             instanceId, l10nLocaleId, workflowObjectId, name, extendedName, state,
-            ordinalNumber, typeId, creator, assignment, workflowTypeId, currentStepTemplateId
+            ordinalNumber, typeId, creator, assignment, workflowTypeId, currentStepTemplateId,
+            values
         );
     }
 
@@ -193,6 +208,7 @@ public class JobDTO {
             ", assignment='" + getAssignment() + "'" +
             ", workflowTypeId='" + getWorkflowTypeId() + "'" +
             ", currentStepTemplateId='" + getCurrentStepTemplateId() + "'" +
+            ", values='" + getValues() + "'" +
             "}";
     }
 

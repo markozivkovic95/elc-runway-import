@@ -1,24 +1,27 @@
 package com.example.runwayimport.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class SearchParamsDTO {
     
-    private String filterId;
+    private List<SearchVariableConditionDTO> variableCondition = new ArrayList<>();
 
     public SearchParamsDTO() {
+
     }
 
-    public SearchParamsDTO(final String filterId) {
-        this.filterId = filterId;
+    public SearchParamsDTO(List<SearchVariableConditionDTO> variableCondition) {
+        this.variableCondition = variableCondition;
     }
 
-    public String getFilterId() {
-        return this.filterId;
+    public List<SearchVariableConditionDTO> getVariableCondition() {
+        return this.variableCondition;
     }
 
-    public SearchParamsDTO setFilterId(final String filterId) {
-        this.filterId = filterId;
+    public SearchParamsDTO setVariableCondition(final List<SearchVariableConditionDTO> variableCondition) {
+        this.variableCondition = variableCondition;
         return this;
     }
 
@@ -30,18 +33,18 @@ public class SearchParamsDTO {
             return false;
         }
         SearchParamsDTO searchParamsDTO = (SearchParamsDTO) o;
-        return Objects.equals(filterId, searchParamsDTO.filterId);
+        return Objects.equals(variableCondition, searchParamsDTO.variableCondition);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(filterId);
+        return Objects.hashCode(variableCondition);
     }
 
     @Override
     public String toString() {
         return "{" +
-            " filterId='" + getFilterId() + "'" +
+            " variableCondition='" + getVariableCondition() + "'" +
             "}";
     }
 
