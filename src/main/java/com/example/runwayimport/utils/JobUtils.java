@@ -8,6 +8,7 @@ import com.example.runwayimport.constants.TechnicalNameConstants;
 import com.example.runwayimport.enums.InheritFromParentEnum;
 import com.example.runwayimport.models.CustomValueDTO;
 import com.example.runwayimport.models.JobCreateDTO;
+import com.example.runwayimport.models.JobDTO;
 import com.example.runwayimport.models.JobUpdateDTO;
 import com.example.runwayimport.models.RunwayRequestDTO;
 import com.example.runwayimport.models.SearchParamsDTO;
@@ -37,8 +38,7 @@ public class JobUtils {
         return result;
     }
 
-    public static JobUpdateDTO createJobUpdateRequest(final Integer instanceId, final Integer l10nLocaleId, final Integer stepNumber,
-            final RunwayRequestDTO request) {
+    public static JobUpdateDTO createJobUpdateRequest(final JobDTO jobDTO, final RunwayRequestDTO request) {
 
         final List<CustomValueDTO> values = new ArrayList<>();
 
@@ -61,8 +61,9 @@ public class JobUtils {
         values.add(new CustomValueDTO(TechnicalNameConstants.SEASON, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getSeason()));
         values.add(new CustomValueDTO(TechnicalNameConstants.QUARTER, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getQuarter()));
         values.add(new CustomValueDTO(TechnicalNameConstants.SOURCE_FACTORY_SHIP_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getSourceFactoryShipDate()));
+        values.add(new CustomValueDTO(TechnicalNameConstants.PRODUCTS_GRID, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProducts()));
 
-        return new JobUpdateDTO(instanceId, l10nLocaleId, stepNumber, values);
+        return new JobUpdateDTO(jobDTO.getInstanceId(), jobDTO.getL10nLocaleId(), 0, values);
     }
 
     public static SearchParamsDTO searchRunwayJobsByNameRequest(final String value) {

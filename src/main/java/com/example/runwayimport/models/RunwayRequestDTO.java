@@ -73,7 +73,7 @@ public class RunwayRequestDTO {
     private List<ProgramOnCounterDateDTO> programOnCounterDates = new ArrayList<>();
 
     @JsonProperty(FieldNameConstants.PRODUCTS)
-    private List<ProductDTO> products = new ArrayList<>();
+    private String products;
 
     public RunwayRequestDTO() {
 
@@ -85,7 +85,7 @@ public class RunwayRequestDTO {
             final String majorInventoryType, final String inventoryType, final String majorCategory,
             final String application, final String category, final String subCategory, final String subCategoryPriority,
             final String season, final String quarter, final String sourceFactoryShipDate, 
-            final List<ProgramOnCounterDateDTO> programOnCounterDates, final List<ProductDTO> products) {
+            final List<ProgramOnCounterDateDTO> programOnCounterDates, final String products) {
 
         this.programId = programId;
         this.programName = programName;
@@ -300,11 +300,11 @@ public class RunwayRequestDTO {
         return this;
     }
 
-    public List<ProductDTO> getProducts() {
+    public String getProducts() {
         return this.products;
     }
 
-    public RunwayRequestDTO setProducts(final List<ProductDTO> products) {
+    public RunwayRequestDTO setProducts(final String products) {
         this.products = products;
         return this;
     }    
