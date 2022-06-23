@@ -11,6 +11,11 @@ public class EndpointConstants {
     public static final String ELC_BRANDMAKER_JOBS = ELC_BRANDMAKER_V1 + "/jobs";
     public static final String ELC_BRANDMAKER_JOBS_WITH_ID = ELC_BRANDMAKER_JOBS + "/%s";
     public static final String ELC_BRANDMAKER_JOBS_SEARCH = ELC_BRANDMAKER_JOBS + "/_search";
+    
+    public static final String ELC_BRANDMAKER_UI = ELC_BRANDMAKER + "/ui";
+    public static final String ELC_BRANDMAKER_UI_OBJECTS = ELC_BRANDMAKER_UI + "/objects";
+    public static final String ELC_BRANDMAKER_UI_OBJECTS_WITH_ID = ELC_BRANDMAKER_UI_OBJECTS + "/%s";
+    public static final String ELC_BRANDMAKER_UI_OBJECTS_WITH_ID_CUSTOM_STRUCTURES = ELC_BRANDMAKER_UI_OBJECTS_WITH_ID + "/custom-structures";
 
     public static final String ELC_BRANDMAKER_DSE_OBJECT = ELC_BRANDMAKER_V1 + "/dse-object";
     public static final String ELC_BRANDMAKER_DSE_OBJECT_WITH_ID = ELC_BRANDMAKER_DSE_OBJECT + "/%s/0";

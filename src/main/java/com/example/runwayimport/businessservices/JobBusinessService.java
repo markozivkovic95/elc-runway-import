@@ -1,11 +1,13 @@
 package com.example.runwayimport.businessservices;
 
 import java.util.List;
+import java.util.Map;
 
 import com.example.runwayimport.constants.TechnicalNameConstants;
 import com.example.runwayimport.enums.GeographicLevelEnum;
 import com.example.runwayimport.enums.InheritFromParentEnum;
 import com.example.runwayimport.enums.JobStatusEnum;
+import com.example.runwayimport.models.CustomStructureDTO;
 import com.example.runwayimport.models.CustomValueDTO;
 import com.example.runwayimport.models.JobCreateDTO;
 import com.example.runwayimport.models.JobDTO;
@@ -13,6 +15,7 @@ import com.example.runwayimport.models.JobUpdateDTO;
 import com.example.runwayimport.models.RunwayRequestDTO;
 import com.example.runwayimport.models.SearchParamsDTO;
 import com.example.runwayimport.services.JobService;
+import com.example.runwayimport.services.ObjectsService;
 import com.example.runwayimport.utils.JobUtils;
 
 import org.slf4j.Logger;
@@ -27,9 +30,11 @@ public class JobBusinessService {
     private static final String NO_PARENT_JOB = "-1";
 
     private final JobService jobService;
+    private final ObjectsService objectsService;
 
-    public JobBusinessService(final JobService jobService) {
+    public JobBusinessService(final JobService jobService, final ObjectsService objectsService) {
         this.jobService = jobService;
+        this.objectsService = objectsService;
     }
 
     public JobDTO importRunwayJob(final RunwayRequestDTO request) {
@@ -51,6 +56,8 @@ public class JobBusinessService {
         } else {
             jobDTO = jobDTOs.get(0);
         }
+
+        final Map<String, List<CustomStructureDTO>> customValues = this.objectsService.getCustomStructures(jobDTO.getInstanceId());
 
         LOGGER.info("Updating job with ID {}.", jobDTO.getInstanceId());
         
