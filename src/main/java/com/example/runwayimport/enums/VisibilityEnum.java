@@ -1,14 +1,12 @@
 package com.example.runwayimport.enums;
 
-public enum GeographicLevelEnum {
-    
-    GLOBAL("1"),
-    REGIONAL("2"),
-    AFFILIATE("3");
+public enum VisibilityEnum {
+    SHOW("Show"),
+    HIDE("Hide");
 
     private final String key;
 
-    GeographicLevelEnum(final String key) {
+    VisibilityEnum(final String key) {
         this.key = key;
     }
 

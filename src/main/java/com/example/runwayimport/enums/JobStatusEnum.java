@@ -1,7 +1,7 @@
 package com.example.runwayimport.enums;
 
 public enum JobStatusEnum {
-    READY_FOR_PROCESSING("Ready for Processing"),
+    READY_FOR_PROCESSING("Ready_for_Processing"),
     PROCESSED("Processed");
 
     private final String key;

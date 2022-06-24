@@ -83,8 +83,8 @@ public class JobUtils {
         final List<String> jsonObjects = new ArrayList<>();
 
         IntStream.range(0, productDTOs.size()).forEach(i -> {
+            
             final ProductDTO product = productDTOs.get(i);
-
             
             final Map<Integer, String> productParameter = parseProductGridParameters(product, customStructures);
             jsonObjects.add(mapProductMapperToJson(productParameter, i + 1));

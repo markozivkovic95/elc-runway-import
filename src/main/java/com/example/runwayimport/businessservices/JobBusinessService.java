@@ -7,6 +7,8 @@ import com.example.runwayimport.constants.TechnicalNameConstants;
 import com.example.runwayimport.enums.GeographicLevelEnum;
 import com.example.runwayimport.enums.InheritFromParentEnum;
 import com.example.runwayimport.enums.JobStatusEnum;
+import com.example.runwayimport.enums.SubscribedEnum;
+import com.example.runwayimport.enums.VisibilityEnum;
 import com.example.runwayimport.models.CustomStructureDTO;
 import com.example.runwayimport.models.CustomValueDTO;
 import com.example.runwayimport.models.JobCreateDTO;
@@ -69,7 +71,6 @@ public class JobBusinessService {
 
     private void updateRunwayJobParameters(final JobUpdateDTO jobUpdateDTO) {
     
-        // TODO: Update processing status
         jobUpdateDTO.getValues().add(
             new CustomValueDTO(
                 TechnicalNameConstants.PROCESSING_STATUS,
@@ -77,23 +78,29 @@ public class JobBusinessService {
                 String.format("\"%s\"", JobStatusEnum.READY_FOR_PROCESSING.getKey())
             )
         );
-        // TODO: Update geographic level
+        
         jobUpdateDTO.getValues().add(
             new CustomValueDTO(
                 TechnicalNameConstants.GEOGRAPHIC_LEVEL,
                 InheritFromParentEnum.NOT_SUPPORTED.getKey(),
                 String.format("\"%s\"", GeographicLevelEnum.GLOBAL.getKey()))
         );
-        // TODO: Find enum
+
         jobUpdateDTO.getValues().add(
             new CustomValueDTO(
                 TechnicalNameConstants.SUBSCRIBED,
                 InheritFromParentEnum.NOT_SUPPORTED.getKey(),
-                "\"2\""
+                String.format("\"%s\"", SubscribedEnum.N.getKey())
             )
         );
-        
-        // TODO: Add Visible: Show
+
+        jobUpdateDTO.getValues().add(
+            new CustomValueDTO(
+                TechnicalNameConstants.VISIBLE,
+                InheritFromParentEnum.NOT_SUPPORTED.getKey(),
+                String.format("\"%s\"", VisibilityEnum.SHOW)
+            )
+        );
     }
 
 }
