@@ -87,7 +87,7 @@ public class JobService {
      */
     public JobDTO createJob(final JobCreateDTO jobCreateDTO) {
 
-        final MultiValueMap<Object, Object> params = JobUtils.createJobRequest(jobCreateDTO);
+        final MultiValueMap<Object, Object> params = JobUtils.mapJobCreateRequest(jobCreateDTO);
         final HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 

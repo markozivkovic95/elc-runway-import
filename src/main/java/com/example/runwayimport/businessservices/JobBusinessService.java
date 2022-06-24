@@ -64,7 +64,7 @@ public class JobBusinessService {
 
         LOGGER.info("Updating job with ID {}.", jobDTO.getInstanceId());
         
-        final JobUpdateDTO jobUpdateDTO = JobUtils.createJobUpdateRequest(jobDTO, request, customStructures);
+        final JobUpdateDTO jobUpdateDTO = JobUtils.mapJobUpdateRequest(jobDTO, request, customStructures);
         updateRunwayJobParameters(jobUpdateDTO);
 
         return this.jobService.updateJob(jobUpdateDTO);
@@ -99,7 +99,7 @@ public class JobBusinessService {
             new CustomValueDTO(
                 TechnicalNameConstants.VISIBLE,
                 InheritFromParentEnum.NOT_SUPPORTED.getKey(),
-                String.format(JSON_FIELD_FORMAT, VisibilityEnum.SHOW)
+                String.format(JSON_FIELD_FORMAT, VisibilityEnum.SHOW.getKey())
             )
         );
     }

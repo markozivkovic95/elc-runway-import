@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.example.runwayimport.constants.FieldNameConstants;
+import com.example.runwayimport.constants.OcdGridConstants;
 import com.example.runwayimport.constants.ProductGridConstants;
 import com.example.runwayimport.constants.TechnicalNameConstants;
 import com.example.runwayimport.enums.InheritFromParentEnum;
@@ -18,6 +19,7 @@ import com.example.runwayimport.models.JobCreateDTO;
 import com.example.runwayimport.models.JobDTO;
 import com.example.runwayimport.models.JobUpdateDTO;
 import com.example.runwayimport.models.ProductDTO;
+import com.example.runwayimport.models.ProgramOnCounterDateDTO;
 import com.example.runwayimport.models.RunwayRequestDTO;
 import com.example.runwayimport.models.SearchParamsDTO;
 import com.example.runwayimport.models.SearchVariableConditionDTO;
@@ -41,7 +43,7 @@ public class JobUtils {
 
     }
 
-    public static MultiValueMap<Object, Object> createJobRequest(final JobCreateDTO jobCreateDTO) {
+    public static MultiValueMap<Object, Object> mapJobCreateRequest(final JobCreateDTO jobCreateDTO) {
 
         final MultiValueMap<Object, Object> result = new LinkedMultiValueMap<>();
 
@@ -53,10 +55,10 @@ public class JobUtils {
         return result;
     }
 
-    public static JobUpdateDTO createJobUpdateRequest(final JobDTO jobDTO, final RunwayRequestDTO request,
+    public static JobUpdateDTO mapJobUpdateRequest(final JobDTO jobDTO, final RunwayRequestDTO request,
             final Map<String, List<CustomStructureDTO>> customStructures) {
 
-        final List<CustomValueDTO> values = addParameters(request, customStructures).stream()
+        final List<CustomValueDTO> values = mapAllRequestParameters(request, customStructures).stream()
                 .filter(value -> StringUtils.isNotBlank(value.getValue()))
                 .collect(Collectors.toList());
 
@@ -66,7 +68,7 @@ public class JobUtils {
     public static SearchParamsDTO searchRunwayJobsByNameRequest(final String value) {
         
         return new SearchParamsDTO(List.of(
-                new SearchVariableConditionDTO(formatJsonValue(value), TechnicalNameConstants.JOB_NAME,
+                new SearchVariableConditionDTO(value, TechnicalNameConstants.JOB_NAME,
                     "AND", "EQUAL"), 
                 new SearchVariableConditionDTO(
                         RUNWAY_JOB_ID.toString(), TechnicalNameConstants.JOB_TYPE_PSEUDO_VARIABLE,
@@ -90,10 +92,51 @@ public class JobUtils {
             final ProductDTO product = productDTOs.get(i);
             
             final Map<Integer, String> productParameter = parseProductGridParameters(product, customStructures);
-            jsonObjects.add(mapProductMapperToJson(productParameter, i + 1));
+            jsonObjects.add(mapToJsonObject(productParameter, i + 1));
         });
 
         return String.format("\"%s\"", jsonObjects);
+    }
+
+    public static String mapOcdGridRequestString(final List<ProgramOnCounterDateDTO> programOnCounterDates, final Map<String, List<CustomStructureDTO>> customStructures) {
+        
+        final String requestString = "\"[%s]\"";
+
+        if (CollectionUtils.isEmpty(programOnCounterDates)) {
+            return String.format(requestString, "");
+        }
+
+        final List<String> jsonObjects = new ArrayList<>();
+
+        IntStream.range(0, programOnCounterDates.size()).forEach(i -> {
+            
+            final ProgramOnCounterDateDTO programOnCounterDateDTO = programOnCounterDates.get(i);
+            
+            final Map<Integer, String> programParameters = parseOcdGridParameters(programOnCounterDateDTO, customStructures);
+            jsonObjects.add(mapToJsonObject(programParameters, i + 1));
+        });
+
+        return String.format("\"%s\"", jsonObjects);
+    }
+
+    private static Map<Integer, String> parseOcdGridParameters(final ProgramOnCounterDateDTO programOnCounter, Map<String, List<CustomStructureDTO>> customStructures) {
+        
+        final Map<Integer, String> parameters = new HashMap<>();
+
+        parameters.put(
+            OcdGridConstants.OCD_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.REGION),
+            getValue(programOnCounter.getRegion(), customStructures.get(OcdGridConstants.PM_REGION))
+        );
+
+        parameters.put(
+            OcdGridConstants.OCD_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.AFFILIATE),
+            getValue(programOnCounter.getAffiliate(), customStructures.get(OcdGridConstants.PM_AFFILIATE))
+        );
+
+        parameters.put(OcdGridConstants.OCD_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.REGIONAL_ON_COUNTER_DATE), programOnCounter.getRegionalOnCounterDate());
+        parameters.put(OcdGridConstants.OCD_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.AFFILIATE_ON_COUNTER_DATE), programOnCounter.getAffiliateOnCounterDate());
+
+        return parameters;
     }
 
     private static String formatJsonValue(final String value) {
@@ -111,17 +154,16 @@ public class JobUtils {
         }
     }
 
-    private static String mapProductMapperToJson(final Map<Integer, String> productParameter, final int id) {
+    private static String mapToJsonObject(final Map<Integer, String> parametersToBeMapped, final int id) {
 
         final StringBuilder sb = new StringBuilder();
         
         sb.append("{");
 
-        productParameter.forEach((key, value) -> {
-            sb.append(String.format(KEY_VALUE_FORMAT, key, value));
-        });
+        parametersToBeMapped.forEach((key, value) -> 
+            sb.append(String.format(KEY_VALUE_FORMAT, key, value))
+        );
 
-        sb.append(String.format(KEY_VALUE_FORMAT, 12, ""));
         sb.append(String.format(KEY_VALUE_FORMAT, "id", id));
 
         // remove last character
@@ -141,10 +183,7 @@ public class JobUtils {
                 .findFirst()
                 .orElseThrow();
 
-        productParameters.put(
-                ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.PRODUCT_CODE), 
-                cs.getValue()
-        );
+        productParameters.put(ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.PRODUCT_CODE), cs.getValue());
 
         productParameters.put(
                 ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.PRODUCT_LINE), 
@@ -210,7 +249,7 @@ public class JobUtils {
         return "";
     } 
 
-    private static List<CustomValueDTO> addParameters(final RunwayRequestDTO request, final Map<String, List<CustomStructureDTO>> customStructures) {
+    private static List<CustomValueDTO> mapAllRequestParameters(final RunwayRequestDTO request, final Map<String, List<CustomStructureDTO>> customStructures) {
 
         final List<CustomValueDTO> values = new ArrayList<>();
 
@@ -238,6 +277,11 @@ public class JobUtils {
         values.add(
             new CustomValueDTO(TechnicalNameConstants.PRODUCTS_GRID, InheritFromParentEnum.NOT_SUPPORTED.getKey(),
                     mapProductsGridInRequestString(request.getProducts(), customStructures))
+        );
+        values.add(
+            new CustomValueDTO(
+                TechnicalNameConstants.OCD_GRID, InheritFromParentEnum.NOT_SUPPORTED.getKey(), mapOcdGridRequestString(request.getProgramOnCounterDates(), customStructures)
+            )
         );
 
         return values;
