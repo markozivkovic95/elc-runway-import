@@ -90,7 +90,7 @@ public class JobUtils {
             jsonObjects.add(mapProductMapperToJson(productParameter, i + 1));
         });
 
-        return String.format("\\\"%s\\\"", jsonObjects);
+        return String.format("\"%s\"", jsonObjects);
     }
 
     private static String mapProductMapperToJson(final Map<Integer, String> productParameter, final int id) {
@@ -110,7 +110,7 @@ public class JobUtils {
         sb.setLength(sb.length() - 1);
         sb.append("}");
 
-        return sb.toString().replace("\\", "\\\\\\");
+        return sb.toString();
     }
 
     private static Map<Integer, String> parseProductGridParameters(final ProductDTO product, final Map<String, List<CustomStructureDTO>> customStructures) {
