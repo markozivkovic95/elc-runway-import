@@ -30,6 +30,7 @@ public class JobBusinessService {
     
     private static final Logger LOGGER = LoggerFactory.getLogger(JobBusinessService.class);
     private static final String NO_PARENT_JOB = "-1";
+    private static final String JSON_FIELD_FORMAT = "\"%s\"";
 
     private final JobService jobService;
     private final ObjectsService objectsService;
@@ -75,7 +76,7 @@ public class JobBusinessService {
             new CustomValueDTO(
                 TechnicalNameConstants.PROCESSING_STATUS,
                 InheritFromParentEnum.NOT_SUPPORTED.getKey(),
-                String.format("\"%s\"", JobStatusEnum.READY_FOR_PROCESSING.getKey())
+                String.format(JSON_FIELD_FORMAT, JobStatusEnum.READY_FOR_PROCESSING.getKey())
             )
         );
         
@@ -83,14 +84,14 @@ public class JobBusinessService {
             new CustomValueDTO(
                 TechnicalNameConstants.GEOGRAPHIC_LEVEL,
                 InheritFromParentEnum.NOT_SUPPORTED.getKey(),
-                String.format("\"%s\"", GeographicLevelEnum.GLOBAL.getKey()))
+                String.format(JSON_FIELD_FORMAT, GeographicLevelEnum.GLOBAL.getKey()))
         );
 
         jobUpdateDTO.getValues().add(
             new CustomValueDTO(
                 TechnicalNameConstants.SUBSCRIBED,
                 InheritFromParentEnum.NOT_SUPPORTED.getKey(),
-                String.format("\"%s\"", SubscribedEnum.N.getKey())
+                String.format(JSON_FIELD_FORMAT, SubscribedEnum.N.getKey())
             )
         );
 
@@ -98,7 +99,7 @@ public class JobBusinessService {
             new CustomValueDTO(
                 TechnicalNameConstants.VISIBLE,
                 InheritFromParentEnum.NOT_SUPPORTED.getKey(),
-                String.format("\"%s\"", VisibilityEnum.SHOW)
+                String.format(JSON_FIELD_FORMAT, VisibilityEnum.SHOW)
             )
         );
     }
