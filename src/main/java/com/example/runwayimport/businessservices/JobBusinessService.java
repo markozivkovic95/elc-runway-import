@@ -57,11 +57,11 @@ public class JobBusinessService {
             jobDTO = jobDTOs.get(0);
         }
 
-        final Map<String, List<CustomStructureDTO>> customValues = this.objectsService.getCustomStructures(jobDTO.getInstanceId());
+        final Map<String, List<CustomStructureDTO>> customStructures = this.objectsService.getCustomStructures(jobDTO.getInstanceId());
 
         LOGGER.info("Updating job with ID {}.", jobDTO.getInstanceId());
         
-        final JobUpdateDTO jobUpdateDTO = JobUtils.createJobUpdateRequest(jobDTO, request);
+        final JobUpdateDTO jobUpdateDTO = JobUtils.createJobUpdateRequest(jobDTO, request, customStructures);
         updateRunwayJobParameters(jobUpdateDTO);
 
         return this.jobService.updateJob(jobUpdateDTO);
@@ -69,6 +69,7 @@ public class JobBusinessService {
 
     private void updateRunwayJobParameters(final JobUpdateDTO jobUpdateDTO) {
     
+        // TODO: Update processing status
         jobUpdateDTO.getValues().add(
             new CustomValueDTO(
                 TechnicalNameConstants.PROCESSING_STATUS,
@@ -76,6 +77,7 @@ public class JobBusinessService {
                 String.format("\"%s\"", JobStatusEnum.READY_FOR_PROCESSING.getKey())
             )
         );
+        // TODO: Update geographic level
         jobUpdateDTO.getValues().add(
             new CustomValueDTO(
                 TechnicalNameConstants.GEOGRAPHIC_LEVEL,

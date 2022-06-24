@@ -1,24 +1,33 @@
 package com.example.runwayimport.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.example.runwayimport.constants.FieldNameConstants;
+import com.example.runwayimport.constants.ProductGridConstants;
 import com.example.runwayimport.constants.TechnicalNameConstants;
 import com.example.runwayimport.enums.InheritFromParentEnum;
+import com.example.runwayimport.models.CustomStructureDTO;
 import com.example.runwayimport.models.CustomValueDTO;
 import com.example.runwayimport.models.JobCreateDTO;
 import com.example.runwayimport.models.JobDTO;
 import com.example.runwayimport.models.JobUpdateDTO;
+import com.example.runwayimport.models.ProductDTO;
 import com.example.runwayimport.models.RunwayRequestDTO;
 import com.example.runwayimport.models.SearchParamsDTO;
 import com.example.runwayimport.models.SearchVariableConditionDTO;
 
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 public class JobUtils {
+
+    private static final String KEY_VALUE_FORMAT = "\\\"%s\\\":\\\"%s\\\",";
 
     public static final Integer RUNWAY_JOB_ID = 3076;
     public static final Integer RUNWAY_WORKFLOW_ID = 103;
@@ -39,9 +48,10 @@ public class JobUtils {
         return result;
     }
 
-    public static JobUpdateDTO createJobUpdateRequest(final JobDTO jobDTO, final RunwayRequestDTO request) {
+    public static JobUpdateDTO createJobUpdateRequest(final JobDTO jobDTO, final RunwayRequestDTO request,
+            final Map<String, List<CustomStructureDTO>> customStructures) {
 
-        final List<CustomValueDTO> values = addParameters(request).stream()
+        final List<CustomValueDTO> values = addParameters(request, customStructures).stream()
                 .filter(value -> value.getValue() != null)
                 .collect(Collectors.toList());
 
@@ -62,7 +72,139 @@ public class JobUtils {
         );
     }
 
-    private static List<CustomValueDTO> addParameters(final RunwayRequestDTO request) {
+    public static String mapProductsGridInRequestString(final List<ProductDTO> productDTOs, final Map<String, List<CustomStructureDTO>> customStructures) {
+
+        final String requestString = "\"[%s]\"";
+
+        if (CollectionUtils.isEmpty(productDTOs)) {
+            return String.format(requestString, "");
+        }
+
+        final List<String> jsonObjects = new ArrayList<>();
+
+        IntStream.range(0, productDTOs.size()).forEach(i -> {
+            final ProductDTO product = productDTOs.get(i);
+
+            
+            final Map<Integer, String> productParameter = parseProductGridParameters(product, customStructures);
+            jsonObjects.add(mapProductMapperToJson(productParameter, i + 1));
+        });
+
+        return String.format("\\\"%s\\\"", jsonObjects);
+    }
+
+    private static String mapProductMapperToJson(final Map<Integer, String> productParameter, final int id) {
+
+        final StringBuilder sb = new StringBuilder();
+        
+        sb.append("{");
+
+        productParameter.forEach((key, value) -> {
+            sb.append(String.format(KEY_VALUE_FORMAT, key, value));
+        });
+
+        sb.append(String.format(KEY_VALUE_FORMAT, 12, ""));
+        sb.append(String.format(KEY_VALUE_FORMAT, "id", id));
+
+        // remove last character
+        sb.setLength(sb.length() - 1);
+        sb.append("}");
+
+        return sb.toString().replace("\\", "\\\\\\");
+    }
+
+    private static Map<Integer, String> parseProductGridParameters(final ProductDTO product, final Map<String, List<CustomStructureDTO>> customStructures) {
+
+        final Map<Integer, String> productParameters = new HashMap<>();
+        final List<CustomStructureDTO> customStructureDTOs = customStructures.get(getCustomStructureKey(FieldNameConstants.PRODUCT_NAME));
+
+        final CustomStructureDTO cs = customStructureDTOs.stream()
+                .filter(c -> c.getValue().equals(product.getProductCode()))
+                .findFirst()
+                .orElseThrow();
+
+        productParameters.put(
+                ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.PRODUCT_CODE), 
+                cs.getValue()
+        );
+
+        productParameters.put(
+                ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.PRODUCT_LINE), 
+                getValue(product.getProductLine(), customStructures.get(getCustomStructureKey(FieldNameConstants.PRODUCT_LINE)))
+        );
+
+        productParameters.put(
+                ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.PRODUCT_ROLE), 
+                getValue(product.getProductRole(), customStructures.get(getCustomStructureKey(FieldNameConstants.PRODUCT_ROLE)))
+        );
+        
+        productParameters.put(
+                ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.MAJOR_CATEGORY), 
+                getValue(product.getMajorCategory(), customStructures.get(getCustomStructureKey(FieldNameConstants.MAJOR_CATEGORY)))
+        );
+
+        productParameters.put(
+                ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.APPLICATION), 
+                getValue(product.getApplication(), customStructures.get(getCustomStructureKey(FieldNameConstants.APPLICATION)))
+        );
+
+        productParameters.put(
+                ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.CATEGORY), 
+                getValue(product.getCategory(), customStructures.get(getCustomStructureKey(FieldNameConstants.CATEGORY)))
+        );
+
+        productParameters.put(
+                ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.SUB_CATEGORY), 
+                getValue(product.getSubCategory(), customStructures.get(getCustomStructureKey(FieldNameConstants.SUB_CATEGORY)))
+        );
+
+        productParameters.put(
+                ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.DEMAND_TYPE), 
+                getValue(product.getDemandType(), customStructures.get(getCustomStructureKey(FieldNameConstants.DEMAND_TYPE)))
+        );
+
+        productParameters.put(
+                ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.SALEABLE), 
+                getValue(product.getSaleable(), customStructures.get(getCustomStructureKey(FieldNameConstants.SALEABLE)))
+        );
+
+        return productParameters;
+    }
+
+    private static String getValue(final String label, final List<CustomStructureDTO> customStructureDTOs) {
+
+        final CustomStructureDTO customStructureDTO = customStructureDTOs.stream()
+                .filter(structure -> structure.getLabel().equals(label))
+                .findFirst()
+                .orElse(null);
+
+        return customStructureDTO != null ? customStructureDTO.getValue() : "";
+    }
+
+    private static String getCustomStructureKey(final String key) {
+
+        switch (key) {
+            case FieldNameConstants.SALEABLE:
+                
+                return "PM_Yes_No_NA";
+            case FieldNameConstants.MAJOR_CATEGORY:
+                
+                return "PM_Product_Application_Major_Category";
+            case FieldNameConstants.APPLICATION:
+                
+                return "PM_Product_Application";
+            case FieldNameConstants.CATEGORY:
+                
+                return "PM_Product_Application_Category";
+
+            case FieldNameConstants.SUB_CATEGORY:
+                return "PM_Product_Application_Sub_Category";
+            default:
+                return String.format("PM_%s", key);
+        }
+    }
+
+    private static List<CustomValueDTO> addParameters(final RunwayRequestDTO request, final Map<String, List<CustomStructureDTO>> customStructures) {
 
         final List<CustomValueDTO> values = new ArrayList<>();
 
@@ -87,7 +229,10 @@ public class JobUtils {
         values.add(new CustomValueDTO(TechnicalNameConstants.SEASON, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getSeason()));
         values.add(new CustomValueDTO(TechnicalNameConstants.QUARTER, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getQuarter()));
         values.add(new CustomValueDTO(TechnicalNameConstants.SOURCE_FACTORY_SHIP_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getSourceFactoryShipDate()));
-        values.add(new CustomValueDTO(TechnicalNameConstants.PRODUCTS_GRID, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProducts()));
+        values.add(
+            new CustomValueDTO(TechnicalNameConstants.PRODUCTS_GRID, InheritFromParentEnum.NOT_SUPPORTED.getKey(),
+                    mapProductsGridInRequestString(request.getProducts(), customStructures))
+        );
 
         return values;
     }
