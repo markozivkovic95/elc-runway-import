@@ -2,6 +2,9 @@ package com.example.runwayimport.models;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomAttributesDTO {
     
     private String attributeId;

@@ -2,22 +2,22 @@ package com.example.runwayimport.exceptions.handlers;
 
 import com.example.runwayimport.models.HttpResponse;
 import com.example.runwayimport.utils.HttpUtils;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpStatusCodeException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    private static final String GENERAL_EXCEPTION_MESSAGE = "Server is unavailable now. Try again later.";
     
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<HttpResponse> serverError(final Exception e) {
+    @ExceptionHandler(JsonProcessingException.class)
+    public ResponseEntity<Void> serverError(final JsonProcessingException e) {
 
-        return HttpUtils.createHttpResponse(HttpStatus.INTERNAL_SERVER_ERROR, GENERAL_EXCEPTION_MESSAGE);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(HttpStatusCodeException.class)
@@ -26,4 +26,10 @@ public class GlobalExceptionHandler {
         return HttpUtils.createHttpResponse(HttpStatus.valueOf(e.getRawStatusCode()), e.getLocalizedMessage());
     }
 
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<Void> methodNotSupported() {
+        
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+    
 }

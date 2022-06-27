@@ -3,6 +3,9 @@ package com.example.runwayimport.models;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomStructureDTO {
 
     private String label;

@@ -1,5 +1,8 @@
 package com.example.runwayimport.controllers;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.example.runwayimport.businessservices.JobBusinessService;
 import com.example.runwayimport.models.JobDTO;
 import com.example.runwayimport.models.RunwayRequestDTO;
@@ -22,11 +25,15 @@ public class RunwayController {
     }
     
     @PostMapping
-    public ResponseEntity<JobDTO> runwayPost(@RequestBody final RunwayRequestDTO requestModel) {
+    public ResponseEntity<List<JobDTO>> runwayPost(@RequestBody final List<RunwayRequestDTO> requestModels) {
+
+        final List<JobDTO> jobDTOs = requestModels.stream()
+                .map(requestModel -> this.jobBusinessService.importRunwayJob(requestModel))
+                .collect(Collectors.toList());
 
         return new ResponseEntity<>(
-            this.jobBusinessService.importRunwayJob(requestModel),
-            HttpStatus.CREATED
+                jobDTOs,
+                HttpStatus.OK
         );
     }
 
