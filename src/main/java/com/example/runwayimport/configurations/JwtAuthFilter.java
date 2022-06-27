@@ -17,18 +17,18 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
             throws ServletException, IOException {
      
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (authHeader == null) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN); // HTTP 403
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return;
         }
 
         if (!JwtUtils.isJwtValidInAuthHeader(authHeader)) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN); // HTTP 403
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return;
         }    
 

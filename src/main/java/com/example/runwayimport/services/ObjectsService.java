@@ -10,7 +10,6 @@ import com.example.runwayimport.utils.RestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,10 +19,9 @@ public class ObjectsService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    public ObjectsService(final RestTemplateBuilder restTemplateBuilder, final ObjectMapper objectMapper) {
+    public ObjectsService(final RestTemplate restTemplate, final ObjectMapper objectMapper) {
         
-        this.restTemplate = restTemplateBuilder.basicAuthentication("filip.djordjevic", "EsteeLauder1")
-                .build();
+        this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
     }
 

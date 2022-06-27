@@ -1,12 +1,17 @@
 package com.example.runwayimport.utils;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 public class RestUtils {
 
@@ -16,22 +21,47 @@ public class RestUtils {
 
     }
 
-    @SuppressWarnings("unchecked")
     public static Map<Object, Object> sendGetRequest(final RestTemplate restTemplate, final String endpoint) {
         
-        return restTemplate.getForEntity(
+        final HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.AUTHORIZATION, getBearerToken());
+        final HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        return restTemplate.exchange(
                 endpoint,
-                HashMap.class
-        ).getBody();
+                HttpMethod.GET,
+                requestEntity,
+                RESPONSE_TYPE
+        )
+        .getBody();
     }
 
-    public static Map<Object, Object> sendPostRequest(final RestTemplate restTemplate, final String endpoint, final HttpEntity<?> httpEntity) {
+    public static Map<Object, Object> sendPostRequest(final RestTemplate restTemplate, final MediaType mediaType,
+            final String endpoint, final Object requestBody) {
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(mediaType);
+        headers.set(HttpHeaders.AUTHORIZATION, getBearerToken());
+        final HttpEntity<?> request = new HttpEntity<>(requestBody, headers);
 
         return restTemplate.exchange(
                 endpoint,
                 HttpMethod.POST,
-                httpEntity,
+                request,
                 RESPONSE_TYPE
         ).getBody();
     }
+
+    public static String getBearerToken() {
+
+        final ServletRequestAttributes servletRequestAttributes = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes());
+
+        if (servletRequestAttributes != null) {
+
+            return servletRequestAttributes.getRequest().getHeader(HttpHeaders.AUTHORIZATION);
+        }
+
+        return null;
+    }
+
 }

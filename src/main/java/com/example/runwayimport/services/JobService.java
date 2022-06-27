@@ -14,9 +14,6 @@ import com.example.runwayimport.utils.RestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
-import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
@@ -28,10 +25,9 @@ public class JobService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    public JobService(final RestTemplateBuilder restTemplateBuilder, final ObjectMapper objectMapper) {
+    public JobService(final RestTemplate restTemplate, final ObjectMapper objectMapper) {
 
-        this.restTemplate = restTemplateBuilder.basicAuthentication("filip.djordjevic", "EsteeLauder1")
-                .build();
+        this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
     }
 
@@ -45,8 +41,9 @@ public class JobService {
         
         final Map<Object, Object> response = RestUtils.sendPostRequest(
                 restTemplate,
+                MediaType.APPLICATION_JSON,
                 EndpointConstants.ELC_BRANDMAKER_JOBS_SEARCH,
-                new HttpEntity<>(searchParams)
+                searchParams
         );
 
         final Object jobs;
@@ -88,13 +85,12 @@ public class JobService {
     public JobDTO createJob(final JobCreateDTO jobCreateDTO) {
 
         final MultiValueMap<Object, Object> params = JobUtils.mapJobCreateRequest(jobCreateDTO);
-        final HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
         final Map<Object, Object> responseBody = RestUtils.sendPostRequest(
                 restTemplate,
+                MediaType.APPLICATION_FORM_URLENCODED,
                 EndpointConstants.INTERNAL_ELC_BRANDMAKER_DSE_OBJECT_CREATE,
-                new HttpEntity<>(params, httpHeaders)
+                params
         );
 
         return this.objectMapper.convertValue(responseBody, JobDTO.class);
@@ -110,8 +106,9 @@ public class JobService {
 
         final Map<Object, Object> responseBody = RestUtils.sendPostRequest(
                 restTemplate,
+                MediaType.APPLICATION_JSON,
                 EndpointConstants.INTERNAL_ELC_BRANDMAKER_DSE_OBJECT_UPDATE,
-                new HttpEntity<>(jobUpdateDTO)
+                jobUpdateDTO
         );
 
         return this.objectMapper.convertValue(responseBody, JobDTO.class);
