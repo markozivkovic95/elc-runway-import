@@ -253,14 +253,14 @@ public class JobUtils {
 
         final List<CustomValueDTO> values = new ArrayList<>();
 
-        values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_ID, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProgramId()));
-        values.add(new CustomValueDTO(TechnicalNameConstants.GLOBAL_PROGRAM_ID, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProgramId()));
+        values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_ID, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formatJsonValue(request.getProgramId())));
+        values.add(new CustomValueDTO(TechnicalNameConstants.GLOBAL_PROGRAM_ID, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formatJsonValue(request.getProgramId())));
         values.add(new CustomValueDTO(TechnicalNameConstants.JOB_NAME, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formatJsonValue(request.getProgramName())));
         values.add(new CustomValueDTO(TechnicalNameConstants.BRAND, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValue(request.getProgramBrand(), customStructures.get(ProductGridConstants.PM_BRAND))));
         values.add(new CustomValueDTO(TechnicalNameConstants.PRODUCT_LINE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValue(request.getProductLine(), customStructures.get(ProductGridConstants.PM_PRODUCT_LINE))));
         values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_STATUS, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValue(request.getProgramStatus(), customStructures.get(ProductGridConstants.PM_PROGRAM_STATUS))));
-        values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_START_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProgramStartDate()));
-        values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_END_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getProgramEndDate()));
+        values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_START_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formatJsonValue(request.getProgramStartDate())));
+        values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_END_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formatJsonValue(request.getProgramEndDate())));
         values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_TYPE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValue(request.getProgramType(), customStructures.get(ProductGridConstants.PM_PROGRAM_TYPE))));
         values.add(new CustomValueDTO(TechnicalNameConstants.PRIORITY, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValue(request.getPriority(), customStructures.get(ProductGridConstants.PM_PRIORITY))));
         values.add(new CustomValueDTO(TechnicalNameConstants.PRODUCT_ROLE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValue(request.getProductRole(), customStructures.get(ProductGridConstants.PM_PRODUCT_ROLE))));
@@ -273,7 +273,7 @@ public class JobUtils {
         values.add(new CustomValueDTO(TechnicalNameConstants.SUB_CATEGORY_PRIORITY, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValue(request.getSubCategoryPriority(), customStructures.get(ProductGridConstants.PM_SUB_CATEGORY_PRIORITY))));
         values.add(new CustomValueDTO(TechnicalNameConstants.SEASON, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValue(request.getSeason(), customStructures.get(ProductGridConstants.PM_SEASON))));
         values.add(new CustomValueDTO(TechnicalNameConstants.QUARTER, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValue(request.getQuarter(), customStructures.get(ProductGridConstants.PM_QUARTER))));
-        values.add(new CustomValueDTO(TechnicalNameConstants.SOURCE_FACTORY_SHIP_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), request.getSourceFactoryShipDate()));
+        values.add(new CustomValueDTO(TechnicalNameConstants.SOURCE_FACTORY_SHIP_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formatJsonValue(request.getSourceFactoryShipDate())));
         values.add(
             new CustomValueDTO(TechnicalNameConstants.PRODUCTS_GRID, InheritFromParentEnum.NOT_SUPPORTED.getKey(),
                     mapProductsGridInRequestString(request.getProducts(), customStructures))
