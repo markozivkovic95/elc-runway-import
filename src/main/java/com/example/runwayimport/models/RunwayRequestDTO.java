@@ -30,8 +30,8 @@ public class RunwayRequestDTO {
     @JsonProperty(value = FieldNameConstants.PROGRAM_END_DATE, required = true)
     private String programEndDate;
 
-    @JsonProperty(FieldNameConstants.PROGRAM_TYPE)
-    private String programType;
+    @JsonProperty(FieldNameConstants.INNOVATION_TYPE)
+    private String innovationType;
 
     @JsonProperty(FieldNameConstants.PRIORITY)
     private String priority;
@@ -81,7 +81,7 @@ public class RunwayRequestDTO {
 
     public RunwayRequestDTO(final String programId, final String programName, final String programBrand,
             final String productLine, final String programStatus, final String programStartDate, 
-            final String programEndDate, final String programType, final String priority, final String productRole,
+            final String programEndDate, final String innovationType, final String priority, final String productRole,
             final String majorInventoryType, final String inventoryType, final String majorCategory,
             final String application, final String category, final String subCategory, final String subCategoryPriority,
             final String season, final String quarter, final String sourceFactoryShipDate, 
@@ -94,7 +94,7 @@ public class RunwayRequestDTO {
         this.programStatus = programStatus;
         this.programStartDate = programStartDate;
         this.programEndDate = programEndDate;
-        this.programType = programType;
+        this.innovationType = innovationType;
         this.priority = priority;
         this.productRole = productRole;
         this.majorInventoryType = majorInventoryType;
@@ -174,12 +174,12 @@ public class RunwayRequestDTO {
         return this;
     }
 
-    public String getProgramType() {
-        return this.programType;
+    public String getInnovationType() {
+        return this.innovationType;
     }
 
-    public RunwayRequestDTO setProgramType(final String programType) {
-        this.programType = programType;
+    public RunwayRequestDTO setInnovationType(final String innovationType) {
+        this.innovationType = innovationType;
         return this;
     }
 
@@ -324,7 +324,7 @@ public class RunwayRequestDTO {
                 Objects.equals(programStatus, runwayRequestDTO.programStatus) &&
                 Objects.equals(programStartDate, runwayRequestDTO.programStartDate) &&
                 Objects.equals(programEndDate, runwayRequestDTO.programEndDate) &&
-                Objects.equals(programType, runwayRequestDTO.programType) &&
+                Objects.equals(innovationType, runwayRequestDTO.innovationType) &&
                 Objects.equals(priority, runwayRequestDTO.priority) &&
                 Objects.equals(productRole, runwayRequestDTO.productRole) &&
                 Objects.equals(majorInventoryType, runwayRequestDTO.majorInventoryType) &&
@@ -345,7 +345,7 @@ public class RunwayRequestDTO {
     public int hashCode() {
         return Objects.hash(
                 programId, programName, programBrand, productLine, programStatus,
-                programStartDate, programEndDate, programType, priority, productRole,
+                programStartDate, programEndDate, innovationType, priority, productRole,
                 majorInventoryType, inventoryType, majorCategory, application, category,
                 subCategory, subCategoryPriority, season, quarter, sourceFactoryShipDate,
                 programOnCounterDates, products
@@ -362,7 +362,7 @@ public class RunwayRequestDTO {
             ", programStatus='" + getProgramStatus() + "'" +
             ", programStartDate='" + getProgramStartDate() + "'" +
             ", programEndDate='" + getProgramEndDate() + "'" +
-            ", programType='" + getProgramType() + "'" +
+            ", innovationType='" + getInnovationType() + "'" +
             ", priority='" + getPriority() + "'" +
             ", productRole='" + getProductRole() + "'" +
             ", majorInventoryType='" + getMajorInventoryType() + "'" +

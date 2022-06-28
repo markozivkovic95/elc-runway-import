@@ -26,6 +26,7 @@ public class ProductGridConstants {
     public static final String PM_SEASON = "PM_Season";
     public static final String PM_QUARTER = "PM_Quarter";
     public static final String PM_DEMAND_TYPE = "PM_Demand_Type";
+    public static final String PM_INNOVATION_TYPE =  "PM_Innovation_Type";
     
     public static final Map<String, Integer> PRODUCT_GRID_REQUEST_CONSTANTS = Map.of(
             FieldNameConstants.PRODUCT_CODE, 11,

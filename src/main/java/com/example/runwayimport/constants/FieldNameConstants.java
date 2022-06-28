@@ -13,6 +13,7 @@ public class FieldNameConstants {
     public static final String PROGRAM_START_DATE = "Program_Start_Date";
     public static final String PROGRAM_END_DATE = "Program_End_Date";
     public static final String PROGRAM_TYPE = "Program_Type";
+    public static final String INNOVATION_TYPE = "Innovation_Type";
 
     public static final String PRIORITY = "Priority";
 

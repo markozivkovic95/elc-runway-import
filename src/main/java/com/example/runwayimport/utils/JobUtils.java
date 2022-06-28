@@ -273,7 +273,7 @@ public class JobUtils {
 
         return "";
     }
-
+    
     private static List<CustomValueDTO> mapAllRequestParameters(final RunwayRequestDTO request, final Map<String, List<CustomStructureDTO>> customStructures) {
 
         final List<CustomValueDTO> values = new ArrayList<>();
@@ -288,7 +288,7 @@ public class JobUtils {
         values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_STATUS, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValueByLabel(request.getProgramStatus(), customStructures.get(ProductGridConstants.PM_PROGRAM_STATUS))));
         values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_START_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formatJsonValue(request.getProgramStartDate())));
         values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_END_DATE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formatJsonValue(request.getProgramEndDate())));
-        values.add(new CustomValueDTO(TechnicalNameConstants.PROGRAM_TYPE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValueByLabel(request.getProgramType(), customStructures.get(ProductGridConstants.PM_PROGRAM_TYPE))));
+        values.add(new CustomValueDTO(TechnicalNameConstants.INNOVATION_TYPE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValueByLabel(request.getInnovationType(), customStructures.get(ProductGridConstants.PM_INNOVATION_TYPE))));
         values.add(new CustomValueDTO(TechnicalNameConstants.PRIORITY, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValueByLabel(request.getPriority(), customStructures.get(ProductGridConstants.PM_PRIORITY))));
         values.add(new CustomValueDTO(TechnicalNameConstants.PRODUCT_ROLE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValueByLabel(request.getProductRole(), customStructures.get(ProductGridConstants.PM_PRODUCT_ROLE))));
         values.add(new CustomValueDTO(TechnicalNameConstants.MAJOR_INVENTORY_TYPE, InheritFromParentEnum.NOT_SUPPORTED.getKey(), formattedGetValueByLabel(request.getMajorInventoryType(), customStructures.get(ProductGridConstants.PM_MAJOR_INVENTORY_TYPE))));

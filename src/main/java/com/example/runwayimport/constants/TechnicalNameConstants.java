@@ -24,6 +24,7 @@ public class TechnicalNameConstants {
     public static final String GEOGRAPHIC_LEVEL = "geographic_level";
     public static final String GLOBAL_PROGRAM_ID = "global_program_id";
     public static final String INVENTORY_TYPE = "inventory_type";
+    public static final String INNOVATION_TYPE = "innovation_type";
     public static final String JOB_ID = "job__id";
     public static final String JOB_ID_FORMATTED = "job__id__formatted";
     public static final String JOB_NAME = "job__name";
@@ -48,6 +49,7 @@ public class TechnicalNameConstants {
     public static final String PROGRAM_START_DATE = "program_start_date";
     public static final String PROGRAM_STATUS = "program_status";
     public static final String PROGRAM_TYPE = "program_type";
+    public static final String PROGRAM_TYPE_1 = "program_type_1";
     public static final String QUARTER = "quarter";
     public static final String REGION = "region";
     public static final String REGIONAL_PROGRAM_ID = "regional_program_id";
