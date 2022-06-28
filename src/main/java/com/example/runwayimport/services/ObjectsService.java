@@ -34,7 +34,7 @@ public class ObjectsService {
 
         final Map<Object, Object> response = RestUtils.sendGetRequest(
                 restTemplate,
-                HttpUtils.createUrlWithParameter(this.properties.getUrl(), EndpointConstants.DSE_REST_UI_OBJECTS_WITH_ID_CUSTOM_STRUCTURES, "" + jobId)
+                HttpUtils.createUrl(this.properties.getUrl(), String.format(EndpointConstants.DSE_REST_UI_OBJECTS_WITH_ID_CUSTOM_STRUCTURES, jobId))
         );
 
         return this.objectMapper.convertValue(response, TypeFactory.defaultInstance().constructMapType(

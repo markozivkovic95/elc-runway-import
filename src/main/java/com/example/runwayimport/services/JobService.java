@@ -75,7 +75,7 @@ public class JobService {
 
         final Map<Object, Object> responseBody = RestUtils.sendGetRequest(
                 restTemplate,
-                HttpUtils.createUrlWithParameter(properties.getUrl(), EndpointConstants.DSE_REST_UI_OBJECTS_WITH_ID, "" + id)
+                HttpUtils.createUrl(properties.getUrl(), String.format("%s%s", EndpointConstants.DSE_REST_UI_OBJECTS_WITH_ID, id))
         );
         
         return this.objectMapper.convertValue(responseBody, JobDTO.class);

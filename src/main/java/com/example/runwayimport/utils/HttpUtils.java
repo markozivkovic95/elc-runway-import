@@ -38,18 +38,4 @@ public class HttpUtils {
         return String.format("%s%s", serverUrl, endpointPath);
     }
 
-    /**
-     * Create endpoint path with parameter
-     * 
-     * @param serverUrl    Server URL
-     * @param endpointPath Relative endpoint path
-     * @param parameter    Requested path parameter
-     * @return String of created URL
-     */
-    public static String createUrlWithParameter(final String serverUrl, final String endpointPath,
-            final String parameter) {
-
-        return String.format("%s%s", serverUrl, endpointPath, parameter);
-    }
-
 }

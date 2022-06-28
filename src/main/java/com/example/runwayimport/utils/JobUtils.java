@@ -182,12 +182,15 @@ public class JobUtils {
         final Map<Integer, String> productParameters = new HashMap<>();
         final List<CustomStructureDTO> customStructureDTOs = customStructures.get(ProductGridConstants.PM_PRODUCT_NAME);
 
-        final CustomStructureDTO cs = customStructureDTOs.stream()
-                .filter(c -> c.getValue().equals(product.getProductCode()))
-                .findFirst()
-                .orElseThrow();
+        if (product.getProductCode() != null) {
 
-        productParameters.put(ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.PRODUCT_CODE), cs.getValue());
+            final CustomStructureDTO cs = customStructureDTOs.stream()
+                    .filter(c -> c.getValue().equals(product.getProductCode()))
+                    .findFirst()
+                    .orElseThrow();
+    
+            productParameters.put(ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.PRODUCT_CODE), cs.getValue());
+        }
 
         productParameters.put(
                 ProductGridConstants.PRODUCT_GRID_REQUEST_CONSTANTS.get(FieldNameConstants.PRODUCT_LINE), 
