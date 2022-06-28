@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.runwayimport.configurations.properties.RunwayImportConfigProperties;
 import com.example.runwayimport.constants.EndpointConstants;
 import com.example.runwayimport.models.CustomStructureDTO;
+import com.example.runwayimport.utils.HttpUtils;
 import com.example.runwayimport.utils.RestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -18,18 +20,21 @@ public class ObjectsService {
     
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+    private final RunwayImportConfigProperties properties;
 
-    public ObjectsService(final RestTemplate restTemplate, final ObjectMapper objectMapper) {
+    public ObjectsService(final RestTemplate restTemplate, final ObjectMapper objectMapper,
+            final RunwayImportConfigProperties properties) {
         
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
+        this.properties = properties;
     }
 
     public Map<String, List<CustomStructureDTO>> getCustomStructures(final Integer jobId) {
 
         final Map<Object, Object> response = RestUtils.sendGetRequest(
                 restTemplate,
-                String.format(EndpointConstants.ELC_BRANDMAKER_UI_OBJECTS_WITH_ID_CUSTOM_STRUCTURES, jobId)
+                HttpUtils.createUrlWithParameter(this.properties.getUrl(), EndpointConstants.DSE_REST_UI_OBJECTS_WITH_ID_CUSTOM_STRUCTURES, "" + jobId)
         );
 
         return this.objectMapper.convertValue(response, TypeFactory.defaultInstance().constructMapType(

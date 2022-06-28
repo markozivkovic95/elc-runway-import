@@ -3,32 +3,37 @@ package com.example.runwayimport.services;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+
+import com.example.runwayimport.configurations.properties.RunwayImportConfigProperties;
 import com.example.runwayimport.constants.EndpointConstants;
 import com.example.runwayimport.constants.FieldNameConstants;
 import com.example.runwayimport.models.JobCreateDTO;
 import com.example.runwayimport.models.JobDTO;
 import com.example.runwayimport.models.JobUpdateDTO;
 import com.example.runwayimport.models.SearchParamsDTO;
+import com.example.runwayimport.utils.HttpUtils;
 import com.example.runwayimport.utils.JobUtils;
 import com.example.runwayimport.utils.RestUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Service;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 public class JobService {
 
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
+    private final RunwayImportConfigProperties properties;
 
-    public JobService(final RestTemplate restTemplate, final ObjectMapper objectMapper) {
+    public JobService(final RestTemplate restTemplate, final ObjectMapper objectMapper,
+            final RunwayImportConfigProperties properties) {
 
         this.restTemplate = restTemplate;
         this.objectMapper = objectMapper;
+        this.properties = properties;
     }
 
     /**
@@ -42,7 +47,7 @@ public class JobService {
         final Map<Object, Object> response = RestUtils.sendPostRequest(
                 restTemplate,
                 MediaType.APPLICATION_JSON,
-                EndpointConstants.ELC_BRANDMAKER_JOBS_SEARCH,
+                HttpUtils.createUrl(properties.getUrl(), EndpointConstants.DSE_REST_JOBS_SEARCH),
                 searchParams
         );
 
@@ -70,7 +75,7 @@ public class JobService {
 
         final Map<Object, Object> responseBody = RestUtils.sendGetRequest(
                 restTemplate,
-                String.format(EndpointConstants.ELC_BRANDMAKER_DSE_OBJECT_WITH_ID, id)
+                HttpUtils.createUrlWithParameter(properties.getUrl(), EndpointConstants.DSE_REST_UI_OBJECTS_WITH_ID, "" + id)
         );
         
         return this.objectMapper.convertValue(responseBody, JobDTO.class);
@@ -89,7 +94,7 @@ public class JobService {
         final Map<Object, Object> responseBody = RestUtils.sendPostRequest(
                 restTemplate,
                 MediaType.APPLICATION_FORM_URLENCODED,
-                EndpointConstants.INTERNAL_ELC_BRANDMAKER_DSE_OBJECT_CREATE,
+                HttpUtils.createUrl(properties.getUrl(), EndpointConstants.DSE_REST_INTERNAL_DSE_OBJECT_CREATE),
                 params
         );
 
@@ -107,7 +112,7 @@ public class JobService {
         final Map<Object, Object> responseBody = RestUtils.sendPostRequest(
                 restTemplate,
                 MediaType.APPLICATION_JSON,
-                EndpointConstants.INTERNAL_ELC_BRANDMAKER_DSE_OBJECT_UPDATE,
+                HttpUtils.createUrl(properties.getUrl(), EndpointConstants.DSE_REST_INTERNAL_DSE_OBJECT_UPDATE),
                 jobUpdateDTO
         );
 
